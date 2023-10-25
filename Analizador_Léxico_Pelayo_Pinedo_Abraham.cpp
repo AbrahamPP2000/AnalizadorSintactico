@@ -1,72 +1,47 @@
 #include <iostream>
-#include <string>
 #include <vector>
+#include <string>
 #include <cctype>
 
-// Definición de la estructura Token
+using namespace std;
+
+// DefiniciÃ³n de la estructura Token
 struct Token {
-	std::string type;
-	std::string value;
+	string type;
+	string value;
 };
 
-// Función para comprobar si una cadena es una palabra clave
-bool isKeyword(const std::string& str) {
-	std::vector<std::string> keywords = { "if", "else", "while", "int", "return" };
-	return std::find(keywords.begin(), keywords.end(), str) != keywords.end();
-}
-
-// Función para analizar la entrada y generar tokens
-std::vector<Token> tokenize(const std::string& input) {
-	std::vector<Token> tokens;
-	std::string currentToken = "";
-	bool inWord = false;
+// FunciÃ³n para analizar la entrada y generar tokens
+vector<Token> tokenize(const string& input) {
+	vector<Token> tokens;
+	string currentToken = "";
 	
 	for (char c : input) {
-		if (std::isalpha(c) || c == '_') {
+		if (isdigit(c)) {
 			currentToken += c;
-			inWord = true;
 		} else {
-			if (inWord) {
-				if (isKeyword(currentToken)) {
-					tokens.push_back({ "Keyword", currentToken });
-				} else {
-					tokens.push_back({ "Identifier", currentToken });
-				}
+			if (!currentToken.empty()) {
+				tokens.push_back({ "Number", currentToken });
 				currentToken = "";
-				inWord = false;
-			}
-			
-			if (std::isdigit(c)) {
-				currentToken += c;
-			} else if (c != ' ') {
-				tokens.push_back({ "Operator", std::string(1, c) });
 			}
 		}
 	}
 	
 	if (!currentToken.empty()) {
-		if (inWord) {
-			if (isKeyword(currentToken)) {
-				tokens.push_back({ "Keyword", currentToken });
-			} else {
-				tokens.push_back({ "Identifier", currentToken });
-			}
-		} else if (std::isdigit(currentToken[0])) {
-			tokens.push_back({ "Number", currentToken });
-		}
+		tokens.push_back({ "Number", currentToken });
 	}
 	
 	return tokens;
 }
 
 int main() {
-	std::string input = "if (x > 0) { return 42; }";
+	string input = "123 is a number, and 456 is another.";
 	
-	std::vector<Token> tokens = tokenize(input);
+	vector<Token> tokens = tokenize(input);
 	
-	std::cout << "Tokens:" << std::endl;
+	cout << "Tokens:" << endl;
 	for (const Token& token : tokens) {
-		std::cout << "Type: " << token.type << ", Value: " << token.value << std::endl;
+		cout << "Type: " << token.type << ", Value: " << token.value << endl;
 	}
 	
 	return 0;
