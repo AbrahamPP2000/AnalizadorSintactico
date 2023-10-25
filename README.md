@@ -1,5 +1,5 @@
 # AnalizadorSintactico
-En este repositorio está el analizador sintáctico. 
+En este repositorio está el analizador sintáctico. Incluyo también el analizador léxico.
 
 Ingreso de una cadena de código simple:
 ![image](https://github.com/AbrahamPP2000/AnalizadorSintactico/assets/97979648/c1f70473-a61c-47de-9e8d-dc7d7f4277e2)
